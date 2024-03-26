@@ -29,11 +29,11 @@ class RewardCommand extends Command implements PluginOwned {
             return;
         }
         if (DailyRewards::getInstance()->hasRedeemed($sender)) {
-            $sender->sendMessage("§cYou have already claimed your daily reward. You can claim the next reward in " . DailyRewards::getInstance()->getTimer($sender));
+            $sender->sendMessage(str_replace("{timer}", DailyRewards::getInstance()->getTimer($sender), DailyRewards::getInstance()->getConfig()->get("has_redeemed")));
             return;
         }
         DailyRewards::getInstance()->redeem($sender);
-        $sender->sendMessage('You have successfully claimed the daily reward.');
+        $sender->sendMessage(DailyRewards::getInstance()->getConfig()->get("successfully_claimed"));
     }
 
     public function getOwningPlugin(): Plugin {

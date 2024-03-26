@@ -4,5 +4,11 @@
 
 waiting_period: 86400
 
+# Items that the people receive as daily reward
 items:
-  - "Diamond"
+  Oak Log: 32
+  Diamond: 3
+
+# Messages
+has_redeemed: "§bDailyReward » §7You have already claimed your reward. You have to wait §b{timer} §7to claim your next reward"
+successfully_claimed: "§bDailyReward » §aYou have successfully claimed your daily reward"

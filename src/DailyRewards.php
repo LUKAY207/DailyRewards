@@ -4,6 +4,7 @@ namespace LUKAY\DailyRewards;
 
 use JsonException;
 use LUKAY\DailyRewards\commands\RewardCommand;
+use pocketmine\block\VanillaBlocks;
 use pocketmine\item\StringToItemParser;
 use pocketmine\item\VanillaItems;
 use pocketmine\player\Player;
@@ -25,7 +26,6 @@ class DailyRewards extends PluginBase {
         $this->saveResource("config.yml");
         $this->data = new Config($this->getDataFolder() . "data.json", Config::JSON);
         $this->getServer()->getCommandMap()->register("DailyRewards", new RewardCommand("reward"));
-        var_dump(VanillaItems::DIAMOND()->getName());
     }
 
     public function getConfig(): Config {
@@ -40,8 +40,8 @@ class DailyRewards extends PluginBase {
         $this->data->save();
         $this->data->reload();
 
-        foreach ($this->getConfig()->get("items") as $itemName) {
-            $player->getInventory()->addItem(StringToItemParser::getInstance()->parse($itemName));
+        foreach (array_keys($this->getConfig()->get("items")) as $itemName) {
+            $player->getInventory()->addItem(StringToItemParser::getInstance()->parse($itemName)->setCount($this->getConfig()->getNested("items." . $itemName)));
         }
     }
 
