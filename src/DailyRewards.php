@@ -4,9 +4,7 @@ namespace LUKAY\DailyRewards;
 
 use JsonException;
 use LUKAY\DailyRewards\commands\RewardCommand;
-use pocketmine\block\VanillaBlocks;
 use pocketmine\item\StringToItemParser;
-use pocketmine\item\VanillaItems;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
@@ -24,12 +22,13 @@ class DailyRewards extends PluginBase {
 
     protected function onEnable(): void {
         $this->saveResource("config.yml");
+        $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         $this->data = new Config($this->getDataFolder() . "data.json", Config::JSON);
         $this->getServer()->getCommandMap()->register("DailyRewards", new RewardCommand("reward"));
     }
 
     public function getConfig(): Config {
-        return new Config($this->getDataFolder() . "config.yml", Config::YAML);
+        return $this->config;
     }
 
     /**
@@ -55,7 +54,7 @@ class DailyRewards extends PluginBase {
             $this->data->reload();
         }
         $array = $this->data->get($player->getName());
-        if ($array[1] + $this->getConfig()->get("waiting_period") <= time()) {
+        if ((int)$array[1] + (int)$this->getConfig()->get("waiting_period") <= time()) {
             $this->data->set($player->getName(), [false, time()]);
             $this->data->save();
             $this->data->reload();
