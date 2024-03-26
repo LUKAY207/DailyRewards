@@ -1,0 +1,10 @@
+name: DailyRewards
+src-namespace-prefix: LUKAY\DailyRewards
+main: LUKAY\DailyRewards\DailyRewards
+api: 5.0.0
+version: 1.0.0
+authors:
+  - LUKAY
+permissions:
+  use.reward:
+    default: true

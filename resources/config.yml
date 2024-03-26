@@ -1,0 +1,8 @@
+# That is the amount of seconds
+# that must pass until a player can claim their next reward.
+# (86400 seconds correspond to one day)
+
+waiting_period: 86400
+
+items:
+  - "Diamond"
